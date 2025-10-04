@@ -53,3 +53,132 @@ A modern React Native (CLI) app built with **Redux Toolkit**, **Redux Persist**,
 ```bash
 git clone https://github.com/Masood97/test_app.git
 cd test_app
+```
+
+### 2️⃣ Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3️⃣ Install pods (for iOS only)
+```bash
+cd ios && pod install && cd ..
+```
+
+### 4️⃣ Run the app
+```bash
+cd ios && pod install && cd ..
+```
+
+### 5️⃣ Start Metro bundler (if not already running)
+```bash
+npx react-native start
+```
+
+## 📁 Folder Structure
+```bash
+src/
+ ├─ api/
+ ├─ assets/
+ ├─ components/
+ │   └─ Button/
+ │       └─ index.jsx
+ ├─ hooks/
+ │   └─ useNetworkStatus.js
+ ├─ navigation/
+ │   ├─ AppNavigator.jsx
+ │   ├─ AuthNavigator.jsx
+ │   └─ index.js
+ ├─ redux/
+ │   ├─ apiHelpers/
+ │   │   └─ index.js
+ │   ├─ featureActions/
+ │   │   └─ index.js
+ │   ├─ persistConfig/
+ │   │   └─ index.js
+ │   ├─ slices/
+ │   │   └─ authSlice.js
+ │   └─ store/
+ │       ├─ store.js
+ │       └─ index.js
+ ├─ screens/
+ │   ├─ Auth/
+ │   │   └─ Login/
+ │   │       └─ index.jsx
+ │   └─ Main/
+ │       ├─ DetailScreen/
+ │       │   └─ index.jsx
+ │       └─ HomeScreen/
+ │           └─ index.jsx
+ ├─ theme/
+ └─ utils/
+```
+ ---
+
+## 🔐 Authentication Flow
+
+1️⃣ User opens app → redirected to **Login Screen**  
+2️⃣ Enters valid email & password → validation handled locally  
+3️⃣ On success → navigates to **Home Screen**  
+4️⃣ **Home Screen**  
+   - Fetches user list using Redux Thunk (`fetchUsers`)  
+   - Displays network status (Online/Offline)  
+   - Renders users in FlatList  
+5️⃣ On tapping a user → navigates to **Detail Screen**  
+6️⃣ Press Logout → clears persisted state → navigates back to **Login**  
+
+---
+
+## 🧩 Custom Hook: useNetworkStatus
+
+```js
+import NetInfo from '@react-native-community/netinfo';
+import { useState, useEffect } from 'react';
+
+export const useNetworkStatus = () => {
+  const [isOnline, setIsOnline] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsOnline(state.isConnected);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  return isOnline;
+};
+```
+---
+### 🧰 Dependencies
+```bash
+"@react-native-async-storage/async-storage": "^2.2.0",
+"@react-native-community/netinfo": "^11.4.1",
+"@react-navigation/native": "^7.1.17",
+"@react-navigation/native-stack": "^7.3.26",
+"@reduxjs/toolkit": "^2.9.0",
+"axios": "^1.12.2",
+"react": "19.1.0",
+"react-native": "0.81.4",
+"react-native-gesture-handler": "^2.28.0",
+"react-native-safe-area-context": "^5.5.2",
+"react-native-screens": "^4.16.0",
+"react-native-size-matters": "^0.4.2",
+"react-native-vector-icons": "^10.3.0",
+"react-redux": "^9.2.0",
+"redux-persist": "^6.0.0"
+```
+---
+## 🧑‍💻 Author
+
+**Masood Ahmed**  
+React Native Developer (2.5+ years experience)  
+Passionate about clean architecture, state management, and performance optimization.  
+
+🔗 [GitHub Profile](https://github.com/Masood97)
+---
+
+### 🏁 License
+
+This project is licensed under the MIT License — feel free to use and modify.
