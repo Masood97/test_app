@@ -66,6 +66,12 @@ export default function LoginScreen() {
 
     const handleSignin = async () => {
         if (loading) return;
+        const emailError = validateEmail(email);
+        const passwordError = validatePassword(password);
+        if (emailError || passwordError) {
+            // setErrors({ email: emailError, password: passwordError });
+            return;
+        }
         setLoading(true);
         try {
             await dispatch(signin(email));
@@ -141,7 +147,7 @@ export default function LoginScreen() {
 
                 <Button
                     title={loading ? 'Loading...!!!' : "Sign in"}
-                    onPress={errors ? () => { } : handleSignin}
+                    onPress={handleSignin}
                     loading={loading}
                     disabled={loading}
                 />
